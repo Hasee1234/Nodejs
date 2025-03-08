@@ -28,10 +28,17 @@ app.post('/products',(req,res)=>{
 })
 
 app.get('/v1/users',(req,res)=>{
+
+  //first method to send data from client to server:Query param ?variable = "value" &
+  //you can define your request in postman through first method written in readme or using param in postman
+  console.log("Query Parameter received",req.query);//now this is how  you will receive the request of client in server
+  console.log("req.params received",req.params)//2nd method used for dynamic id
+
   try{
     // fgcvb
     let data=[{
-      name:"Haseeb",
+      id:req.query?.id,//this wll be same id that client will send in request
+      name:req.query?.userName,//this wll be same userName that client will send in request
       age:20
     }]
     res.status(200).json({
