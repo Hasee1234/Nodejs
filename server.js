@@ -10,6 +10,37 @@ app.use(bodyParser.urlencoded({extended:false}))//3rd method
 app.use(bodyParser.json())
 
 
+app.get("/",(req,res)=>{
+  res.send('server is running')
+})
+
+app.get('/todos',(req,res)=>{
+  try{
+    let todos = [
+      { id: 1, title: 'Product 1 by naveed', price: 100, category: 'Category 1', description: 'Description 1', image: 'Image 1' },
+      { id: 2, title: 'Product 2', price: 200, category: 'Category 2', description: 'Description 2', image: 'Image 2' },
+      { id: 3, title: 'Product 3', price: 300, category: 'Category 3', description: 'Description 3', image: 'Image 3' },
+      { id: 4, title: 'Product 4', price: 400, category: 'Category 4', description: 'Description 4', image: 'Image 4' },
+    ]
+    res.json({
+    data:todos,
+    status:"success"
+    })
+
+  }catch(error){
+    res.status(501).json({
+      data:[],
+      status:"error",
+      error:error
+    })
+  }
+})
+
+
+
+
+
+
 
 // app.use((req,res,next)=>{//this is the midleware every response will pass from here you can end it here //you ca  use morethan one middleware
 //   console.log('time:',Date.now());
