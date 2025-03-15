@@ -1,5 +1,7 @@
 const express = require('express')
 const bodyParser=require('body-parser')
+const mongoose=require('mongoose')
+// const { json } = require('express')
 const app = express()
 var cors=require('cors')
 const port = 8000
@@ -23,8 +25,83 @@ app.get('/todos',(req,res)=>{
       { id: 4, title: 'Product 4', price: 400, category: 'Category 4', description: 'Description 4', image: 'Image 4' },
     ]
     res.json({
-    data:todos,
-    status:"success"
+      data:todos,
+      status:"success"
+    })
+    
+  }catch(error){
+    res.status(501).json({
+      data:[],
+      status:"error",
+      error:error
+    })
+  }
+})
+
+app.get('/todos/:id',(req,res)=>{
+  try{
+    let todos=[
+      {id:1,title:'Todo 1',description:'description 1'},
+      {id:2,title:'Todo 1',description:'description 2'},
+      {id:3,title:'Todo 1',description:'description 3'},
+      {id:4,title:'Todo 1',description:'description 4'},
+    ]
+    let todo=todos.find(todo=>todo.id==req.params.id)
+    res.json({
+      data:todo,
+      status:"success"
+    })
+  }catch(error){
+    res.status(501).json({
+      data:[],
+      status:"error",
+      error:error
+    })
+  }
+}
+)
+
+app.post('/todos/create',(req,res)=>{
+  try{
+    let todos=[
+      {id:1,title:'Todo 1',description:'description 1'},
+      {id:2,title:'Todo 1',description:'description 2'},
+      {id:3,title:'Todo 1',description:'description 3'},
+      {id:4,title:'Todo 1',description:'description 4'},
+    ]
+    let newTodo={
+      id:todos.length + 1,
+      title:req.body.title,
+      description:req.body.description
+    }
+    todos.push(newTodo)
+    res.json({
+      data:todos,
+      status:"success"
+    })
+  }catch(error){
+    res.status(501).json({
+      data:[],
+      status:"error",
+      error:error
+    })
+  }
+})
+
+app.put('/todos/update/:id',(req,res)=>{
+  try{
+    let todos=[
+      {id:1,title:'Todo 1',description:'description 1'},
+      {id:2,title:'Todo 1',description:'description 2'},
+      {id:3,title:'Todo 1',description:'description 3'},
+      {id:4,title:'Todo 1',description:'description 4'},
+    ]
+    let todo=todos.find(todo=>todo.id==req.params.id)
+    todo.title=req.body.title
+    todo.description= req.body.description
+    res.json({
+      data:todos,
+      status:"success"
     })
 
   }catch(error){
@@ -36,13 +113,30 @@ app.get('/todos',(req,res)=>{
   }
 })
 
-app.get('/todos/:id',(req,res)={
-  
+app.delete('/todos/delete/:id',(req, res) => {
+    try {
+      let todos=[
+        {id:1,title:'Todo 1',description:'description 1'},
+        {id:2,title:'Todo 1',description:'description 2'},
+        {id:3,title:'Todo 1',description:'description 3'},
+        {id:4,title:'Todo 1',description:'description 4'},
+      ]
+      let todo=todos.find(todo.id==req.params.id)
+      let index=todos.indexOf(todo)
+      todos.splice(index,1)
+      res.json({
+        data:todos,
+        status:"success"
+      })
+
+    } catch (error) {
+        res.json({
+            data: [],
+            status: "error",
+            error: error
+        })
+    }
 })
-
-
-
-
 
 
 // app.use((req,res,next)=>{//this is the midleware every response will pass from here you can end it here //you ca  use morethan one middleware
