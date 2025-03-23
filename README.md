@@ -51,3 +51,8 @@ app.get('/api/data', (req, res) => {
 6. socketio
 7. graphql
 8. server event
+
+
+how mongoose work:
+Schema-model
+using model we do CRUD operations

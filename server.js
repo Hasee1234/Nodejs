@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser=require('body-parser')
 const mongoose=require('mongoose')
-// const { json } = require('express')
 const app = express()
 var cors=require('cors')
 const port = 8000
@@ -10,6 +9,16 @@ app.use(cors())//install cord to use two servers
 // app.use(express.json())
 app.use(bodyParser.urlencoded({extended:false}))//3rd method
 app.use(bodyParser.json())
+
+//function for mongo db connection using mongoose
+uri="mongodb+srv://haseemirza123:05august2004@cluster0.x6o6f.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0";
+const connectDB=async()=>{
+  return await mongoose.connect(uri,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+  })
+};
+module.exports=connectDB;
 
 
 app.get("/",(req,res)=>{
