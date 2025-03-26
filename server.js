@@ -421,3 +421,48 @@ app.delete("/todos/delete/:id", async (req, res) => {
 
 // Start the Server
 start();
+
+// authentication-login/signup
+// file upload =>
+  //frontend ->storage ->url ->api ->db(recommended)
+  //frontend ->api ->storage ->url ->db
+//folder structure od node.js
+//connection with frontend
+//how to do same work in nextjs
+
+//authentication you take data in login signup sp post method
+app.post("/auth/login",(req, res) => {
+  try {
+    console.log('req.body recieved',req.body);
+    res.json({
+      data: req.body,
+      status: "success"
+    }); 
+    
+  } catch (error) {
+   res.json({
+      data:[],
+      status:"error",
+      error:error
+   }) 
+  }
+});
+
+
+app.post("/auth/signup",(req, res) => {
+  try {
+    console.log('req.body recieved',req.body);
+    res.json({
+      data: req.body,
+      status: "success"
+    }); 
+    
+  } catch (error) {
+   res.json({
+      data:[],
+      status:"error",
+      error:error
+   }) 
+  }
+});
+
