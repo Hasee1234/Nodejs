@@ -253,19 +253,30 @@ app.use(bodyParser.json());
 // MongoDB Connection
 const uri =
   "mongodb+srv://haseemirza123:05august2004@cluster0.x6o6f.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0";
+ 
 
+// const connectDB = async () => {
+//   try {
+//     await mongoose.connect(uri, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log("✅ MongoDB Connected Successfully");
+//   } catch (error) {
+//     console.error("❌ MongoDB Connection Failed:", error);
+//     process.exit(1);
+//   }
+// };
 const connectDB = async () => {
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri); // No need for deprecated options
     console.log("✅ MongoDB Connected Successfully");
   } catch (error) {
     console.error("❌ MongoDB Connection Failed:", error);
     process.exit(1);
   }
 };
+
 
 // Start Server After DB Connects
 const start = async () => {
