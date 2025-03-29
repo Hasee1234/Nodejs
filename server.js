@@ -460,9 +460,45 @@ app.post("/auth/login",(req, res) => {
 });
 
 
-app.post("/auth/signup",(req, res) => {
+const userSchema=new mongoose.Schema({
+  name:{
+    type:String,
+    unique:true,
+    required:true
+  },
+  email:{
+    type:String,
+    unique:true,
+    required:true
+  },
+  password:{
+    type:String,
+    unique:true,
+    required:true
+  },
+  address:String,
+})
+const User=mongoose.model('User',userSchema)
+
+
+app.post("/auth/signup",async(req, res) => {
   try {
     console.log('req.body recieved',req.body);
+    if(!req.body?.password){
+      res.json({
+        data:[],
+        status:"error",
+        error:"password is required"
+      })
+    }
+    let newUser= await new User({
+      name:req.body?.name,
+      email:req.body?.email,
+      password:req.body?.password,
+      address:req.body?.address
+    })
+    let output =newUser.save()
+
     res.json({
       data: req.body,
       status: "success"
