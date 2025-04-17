@@ -2,7 +2,14 @@
 // app.get("/todos", (req, res) => {
 //   res.json({ data: todos, status: "success" });
 // });
-app.get("/todos", authVerify ,);
+
+const { fetchTodos, getTodoById, createTodo, updateTodo, deleteTodo } = require("../Controllers/todosController");
+const authVerify=require("../Middleware/authVerify");
+const express = require("express");
+const authRouter = express.Router();
+
+
+authRouter.get("/todos", authVerify ,fetchTodos);
   
   
   
@@ -15,17 +22,7 @@ app.get("/todos", authVerify ,);
   //     res.status(404).json({ message: "Todo not found" });
   //   }
   // });
-  app.get("/todos/:id",authVerify, async (req, res) => {
-    try {
-      const todo = await Todo.findById(req.params.id); // Find by MongoDB ID
-      if (!todo) {
-        return res.status(404).json({ message: "Todo not found" });
-      }
-      res.json({ data: todo, status: "success" });
-    } catch (error) {
-      res.status(500).json({ status: "error", error: error.message });
-    }
-  }); 
+  authRouter.get("/todos/:id",authVerify, getTodoById); 
   
   
   
@@ -39,16 +36,7 @@ app.get("/todos", authVerify ,);
   //   todos.push(newTodo);
   //   res.status(201).json({ data: newTodo, status: "success" });
   // });
-  app.post("/todos/create", authVerify ,async (req, res) => {
-    try {
-      const { title, description } = req.body;
-      const newTodo = new Todo({ title, description });
-      await newTodo.save(); // Save todo to MongoDB
-      res.status(201).json({ data: newTodo, status: "success" });
-    } catch (error) {
-      res.status(500).json({ status: "error", error: error.message });
-    }
-  });
+  authRouter.post("/todos/create", authVerify ,createTodo);
   
   
   
@@ -64,24 +52,7 @@ app.get("/todos", authVerify ,);
   //     res.status(404).json({ message: "Todo not found" });
   //   }
   // });
-  app.put("/todos/update/:id", async (req, res) => {
-    try {
-      const { title, description, completed } = req.body;
-      const updatedTodo = await Todo.findByIdAndUpdate(
-        req.params.id,
-        { title, description, completed },
-        { new: true } // Returns updated document
-      );
-  
-      if (!updatedTodo) {
-        return res.status(404).json({ message: "Todo not found" });
-      }
-  
-      res.json({ data: updatedTodo, status: "success" });
-    } catch (error) {
-      res.status(500).json({ status: "error", error: error.message });
-    }
-  });
+  authRouter.put("/todos/update/:id",authVerify,updateTodo);
   
   
   
@@ -96,15 +67,6 @@ app.get("/todos", authVerify ,);
   //     res.status(404).json({ message: "Todo not found" });
   //   }
   // });
-  app.delete("/todos/delete/:id", async (req, res) => {
-    try {
-      const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
-      if (!deletedTodo) {
-        return res.status(404).json({ message: "Todo not found" });
-      }
-      res.json({ message: "Todo deleted successfully", status: "success" });
-    } catch (error) {
-      res.status(500).json({ status: "error", error: error.message });
-    }
-  });
+  authRouter.delete("/todos/delete/:id",deleteTodo);
   
+  module.exports = authRouter;

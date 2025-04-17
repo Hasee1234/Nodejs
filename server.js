@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const Todo = require("./Models/Todo"); // Import the Todo model
+const connectDB = require("./Config/db");
 
 const app = express();
 const port = 8000;
