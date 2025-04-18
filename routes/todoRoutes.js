@@ -6,10 +6,10 @@
 const { fetchTodos, getTodoById, createTodo, updateTodo, deleteTodo } = require("../Controllers/todosController");
 const authVerify=require("../Middleware/authVerify");
 const express = require("express");
-const authRouter = express.Router();
+const todoRouter = express.Router();
 
 
-authRouter.get("/todos", authVerify ,fetchTodos);
+todoRouter.get("/", authVerify ,fetchTodos);
   
   
   
@@ -22,7 +22,7 @@ authRouter.get("/todos", authVerify ,fetchTodos);
   //     res.status(404).json({ message: "Todo not found" });
   //   }
   // });
-  authRouter.get("/todos/:id",authVerify, getTodoById); 
+  todoRouter.get("/:id",authVerify, getTodoById); 
   
   
   
@@ -36,7 +36,7 @@ authRouter.get("/todos", authVerify ,fetchTodos);
   //   todos.push(newTodo);
   //   res.status(201).json({ data: newTodo, status: "success" });
   // });
-  authRouter.post("/todos/create", authVerify ,createTodo);
+  todoRouter.post("/create", authVerify ,createTodo);
   
   
   
@@ -52,7 +52,7 @@ authRouter.get("/todos", authVerify ,fetchTodos);
   //     res.status(404).json({ message: "Todo not found" });
   //   }
   // });
-  authRouter.put("/todos/update/:id",authVerify,updateTodo);
+  todoRouter.put("/update/:id",authVerify,updateTodo);
   
   
   
@@ -67,6 +67,6 @@ authRouter.get("/todos", authVerify ,fetchTodos);
   //     res.status(404).json({ message: "Todo not found" });
   //   }
   // });
-  authRouter.delete("/todos/delete/:id",deleteTodo);
+  todoRouter.delete("/delete/:id",deleteTodo);
   
-  module.exports = authRouter;
+  module.exports = todoRouter;
