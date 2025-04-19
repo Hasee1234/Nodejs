@@ -4,11 +4,10 @@ var jwt = require('jsonwebtoken');
 const authVerify=(req,res,next)=>{
     try {
         const secretKey=process.env.SECRET_KEY
-      console.log("req.headers received",req.headers);
       console.log("secret key",secretKey);
       
       if(!req.headers.authorization){
-        res.json({
+        return res.json({
           data:[],
           status:"error",
           error:"login required"
@@ -27,7 +26,7 @@ const authVerify=(req,res,next)=>{
       next()
       
     } catch (error) {
-      res.json({
+     return res.json({
         data:[],
         status:"error",
         error:"error"

@@ -7,7 +7,6 @@ const dotenv = require("dotenv");
 const authVerify = require("./middlewares/auth");
 const authRouter = require("./routes/authRoutes");
 const Todo = require("./models/TodoModel");
-dotenv.config();
 
 const app = express();
 const port = 8000;
@@ -23,7 +22,8 @@ app.use(authVerify);
 app.use("/auth",authRouter)
 app.use("/todo",Todo)
 
-
+//config 
+dotenv.config();
 // Start Server After DB Connects
 const start = async () => {
   try {

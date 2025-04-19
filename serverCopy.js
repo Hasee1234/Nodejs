@@ -239,7 +239,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 var jwt = require('jsonwebtoken');
-
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const Todo = require("./Models/Todo"); // Import the Todo model

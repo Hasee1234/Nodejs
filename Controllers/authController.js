@@ -24,16 +24,15 @@ const doSignUp=async(req, res) => {
     let output =await newUser.save()
 
     res.json({
-      data: 
-    //   output,
-      {
+      data: {//   output,
         name: req.body.name,
         email: req.body.email,
-        password: hash, // showing the hashed password in postman
+        password: hash,
         address: req.body.address
       },
       status: "success"
-    }); 
+    });
+    
     
   } catch (error) {
    res.json({
@@ -79,6 +78,10 @@ const doLogin=async(req, res) => {
           error:"password is not valid" 
         })
       }
+
+      
+      const secretKey = process.env.SECRET_KEY;
+      console.log('secretKey', secretKey);
       var token = jwt.sign({_id:userFound._id, email:userFound.email,name:userFound.name}, secretKey);
       console.log("token",token);
       
