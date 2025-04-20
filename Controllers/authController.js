@@ -38,7 +38,7 @@ const doSignUp=async(req, res) => {
    res.json({
       data:[],
       status:"error",
-      error:error
+      error:error.message
    }) 
   }
 }
@@ -75,13 +75,13 @@ const doLogin=async(req, res) => {
         res.json({
           data:[],
           status:"error",
-          error:"password is not valid" 
+          error:"password is not valid"  
         })
       }
 
       
       const secretKey = process.env.SECRET_KEY;
-      console.log('secretKey', secretKey);
+      // console.log('secretKey', secretKey);
       var token = jwt.sign({_id:userFound._id, email:userFound.email,name:userFound.name}, secretKey);
       console.log("token",token);
       

@@ -3,10 +3,11 @@
 //   res.json({ data: todos, status: "success" });
 // });
 
-const { fetchTodos, getTodoById, createTodo, updateTodo, deleteTodo } = require("../Controllers/todosController");
-const authVerify=require("../Middleware/authVerify");
 const express = require("express");
 const todoRouter = express.Router();
+
+const { fetchTodos, getTodoById, createTodo, updateTodo, deleteTodo } = require("../Controllers/todosController");
+const authVerify = require("../middlewares/auth");
 
 
 todoRouter.get("/", authVerify ,fetchTodos);

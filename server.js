@@ -4,9 +4,8 @@ const cors = require("cors");
 const connectDB = require("./Config/db");
 
 const dotenv = require("dotenv");
-const authVerify = require("./middlewares/auth");
 const authRouter = require("./routes/authRoutes");
-const Todo = require("./models/TodoModel");
+const todoRouter = require("./routes/todoRoutes");
 
 const app = express();
 const port = 8000;
@@ -15,12 +14,11 @@ const port = 8000;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(authVerify);
 
 
 //auth Routes
 app.use("/auth",authRouter)
-app.use("/todo",Todo)
+app.use("/todos",todoRouter)
 
 //config 
 dotenv.config();
